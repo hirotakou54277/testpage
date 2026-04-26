@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>グループホーム Crafton | 安心・快適な暮らしを</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7A4F5E;
+            --accent: #E8A0B4;
+            --pink: #F06292;
+            --gold: #C9A96E;
+            --bg: #FAF7F5;
+            --text: #2C2C2C;
+            --muted: #6B6B6B;
+            --white: #FFFFFF;
+            --shadow: rgba(0,0,0,0.10);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top:0; width:100%; z-index:1000;
+            padding: 22px 50px;
+            display: flex; align-items:center; justify-content:space-between;
+            transition: all .4s ease;
+        }
+        nav.scrolled {
+            background: rgba(255,255,255,.96);
+            backdrop-filter: blur(12px);
+            padding: 12px 50px;
+            box-shadow: 0 2px 24px var(--shadow);
+        }
+        .nav-logo {
+            font-family:'Noto Serif JP',serif; font-size:1.5rem;
+            color:#fff; font-weight:500; letter-spacing:3px;
+            transition: color .4s;
+        }
+        nav.scrolled .nav-logo { color: var(--primary); }
+        .nav-links { display:flex; gap:28px; list-style:none; }
+        .nav-links a {
+            color:#fff; text-decoration:none; font-size:.82rem;
+            letter-spacing:1px; transition: color .3s;
+        }
+        nav.scrolled .nav-links a { color: var(--text); }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-cta {
+            background: var(--accent); color:#fff !important;
+            padding:8px 22px; border-radius:25px;
+            transition: background .3s, transform .2s !important;
+        }
+        .nav-cta:hover { background:var(--primary) !important; transform:translateY(-2px); }
+
+        /* ── HERO SLIDER ── */
+        .hero { position:relative; height:100vh; overflow:hidden; }
+        .hero-slides { position:relative; height:100%; }
+        .hero-slide {
+            position:absolute; inset:0; opacity:0;
+            transition: opacity 1.2s ease; cursor:pointer;
+        }
+        .hero-slide.active { opacity:1; }
+        .hero-slide img {
+            width:100%; height:100%; object-fit:cover;
+            will-change: transform;
+        }
+        .hero-slide::after {
+            content:''; position:absolute; inset:0;
+            background: linear-gradient(to bottom,
+                rgba(0,0,0,.15) 0%, rgba(0,0,0,.05) 40%, rgba(0,0,0,.55) 100%);
+        }
+        .hero-content {
+            position:absolute; bottom:14%; left:8%; z-index:10; color:#fff;
+        }
+        .hero-tag {
+            font-size:.72rem; letter-spacing:5px; text-transform:uppercase;
+            color:var(--accent); margin-bottom:14px;
+            opacity:0; transform:translateY(20px);
+            animation: fadeUp .8s .3s forwards;
+        }
+        .hero-content h1 {
+            font-family:'Noto Serif JP',serif;
+            font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+            font-weight:300; line-height:1.35; margin-bottom:18px;
+            opacity:0; transform:translateY(20px);
+            animation: fadeUp .8s .5s forwards;
+        }
+        .hero-sub {
+            font-size:1rem; font-weight:300; letter-spacing:2px;
+            opacity:0; transform:translateY(20px);
+            animation: fadeUp .8s .7s forwards;
+        }
+        .hero-dots {
+            position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+            display:flex; gap:10px; z-index:10;
+        }
+        .hero-dot {
+            width:8px; height:8px; border-radius:4px;
+            background:rgba(255,255,255,.45); border:none; cursor:pointer;
+            transition: all .4s; padding:0;
+        }
+        .hero-dot.active { background:var(--accent); width:26px; }
+        .hero-bar {
+            position:absolute; bottom:0; left:0; height:3px;
+            background:linear-gradient(90deg,var(--pink),var(--accent));
+            z-index:10; transition: width .1s linear;
+        }
+        .hero-arrow {
+            position:absolute; top:50%; z-index:10; transform:translateY(-50%);
+            background:rgba(255,255,255,.18); backdrop-filter:blur(6px);
+            border:1px solid rgba(255,255,255,.35); border-radius:50%;
+            width:48px; height:48px; cursor:pointer; color:#fff;
+            font-size:1.2rem; display:flex; align-items:center; justify-content:center;
+            transition: background .3s;
+        }
+        .hero-arrow:hover { background:rgba(255,255,255,.35); }
+        .hero-prev { left:30px; }
+        .hero-next { right:30px; }
+
+        /* ── SECTION COMMON ── */
+        section { padding:100px 0; }
+        .container { max-width:1200px; margin:0 auto; padding:0 44px; }
+        .sec-label {
+            display:block; font-size:.68rem; letter-spacing:5px;
+            text-transform:uppercase; color:var(--accent); margin-bottom:12px;
+        }
+        .sec-title {
+            font-family:'Noto Serif JP',serif;
+            font-size: clamp(1.8rem,3vw,2.6rem);
+            font-weight:400; line-height:1.45; margin-bottom:18px; color:var(--primary);
+        }
+        .sec-desc {
+            color:var(--muted); line-height:1.95; max-width:580px; margin-bottom:55px;
+            font-size:.92rem;
+        }
+
+        /* ── PINK UNDERLINE ── */
+        .hl {
+            position:relative; display:inline-block;
+        }
+        .hl::after {
+            content:''; position:absolute; bottom:-5px; left:0;
+            height:3px; width:0;
+            background:linear-gradient(90deg,var(--pink),var(--accent));
+            border-radius:2px; transition: width .85s cubic-bezier(.4,0,.2,1);
+        }
+        .hl.go::after { width:100%; }
+
+        /* ── FADE ANIMATIONS ── */
+        .fu { opacity:0; transform:translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+        .fi { opacity:0; transition: opacity .8s ease; }
+        .fu.on, .fi.on { opacity:1; transform:none; }
+        .d1{transition-delay:.1s} .d2{transition-delay:.2s}
+        .d3{transition-delay:.3s} .d4{transition-delay:.4s}
+        .d5{transition-delay:.5s}
+
+        @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+        /* ── ABOUT ── */
+        .about { background:var(--white); }
+        .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+        .about-img-wrap { position:relative; border-radius:6px; overflow:visible; }
+        .about-img-wrap img {
+            width:100%; height:490px; object-fit:cover;
+            border-radius:6px; display:block;
+            transition: transform .8s ease;
+        }
+        .about-img-wrap:hover img { transform:scale(1.04); }
+        .about-badge {
+            position:absolute; bottom:28px; right:-22px;
+            background:var(--primary); color:#fff;
+            padding:18px 24px; border-radius:6px; text-align:center;
+            box-shadow: 0 12px 32px rgba(0,0,0,.22);
+        }
+        .about-badge .num {
+            font-family:'Noto Serif JP',serif; font-size:2.2rem;
+            font-weight:700; color:var(--accent); display:block;
+        }
+        .about-features { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:38px; }
+        .about-feat { display:flex; align-items:flex-start; gap:12px; }
+        .about-feat-ic { font-size:1.6rem; flex-shrink:0; }
+        .about-feat h4 { font-size:.84rem; font-weight:500; margin-bottom:4px; }
+        .about-feat p { font-size:.74rem; color:var(--muted); line-height:1.65; }
+
+        /* ── ROOMS ── */
+        .rooms { background:var(--bg); }
+        .r-tabs { display:flex; border-bottom:1px solid #E0D8D5; margin-bottom:48px; }
+        .r-tab {
+            padding:12px 32px; background:none; border:none; border-bottom:2px solid transparent;
+            margin-bottom:-1px; font-family:'Noto Sans JP',sans-serif; font-size:.84rem;
+            cursor:pointer; color:var(--muted); transition:all .3s;
+        }
+        .r-tab.on { color:var(--primary); border-bottom-color:var(--accent); }
+        .r-panels > div { display:none; }
+        .r-panels > div.on { display:block; }
+        .room-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+        .room-card {
+            background:var(--white); border-radius:10px; overflow:hidden;
+            box-shadow:0 2px 18px var(--shadow);
+            transition: transform .35s, box-shadow .35s;
+        }
+        .room-card:hover { transform:translateY(-10px); box-shadow:0 18px 45px rgba(0,0,0,.15); }
+        .rc-img { position:relative; overflow:hidden; height:230px; }
+        .rc-img img { width:100%; height:100%; object-fit:cover; transition:transform .55s; }
+        .room-card:hover .rc-img img { transform:scale(1.08); }
+        .rc-badge {
+            position:absolute; top:14px; left:14px;
+            background:var(--primary); color:#fff;
+            font-size:.66rem; padding:4px 10px; border-radius:4px; letter-spacing:1px;
+        }
+        .rc-body { padding:20px; }
+        .rc-body h3 { font-family:'Noto Serif JP',serif; font-size:1.08rem; margin-bottom:8px; color:var(--primary); }
+        .rc-specs { display:flex; gap:14px; font-size:.74rem; color:var(--muted); margin-bottom:12px; }
+        .rc-price { font-family:'Noto Serif JP',serif; font-size:1.25rem; color:var(--primary); font-weight:500; }
+        .rc-price small { font-size:.68rem; font-family:'Noto Sans JP',sans-serif; color:var(--muted); font-weight:400; }
+        .fp-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+        .fp-card {
+            background:var(--white); border-radius:10px; padding:28px;
+            box-shadow:0 2px 18px var(--shadow);
+            display:grid; grid-template-columns:190px 1fr; gap:22px; align-items:center;
+        }
+        .fp-img { background:#F0EBE8; height:170px; border-radius:6px; overflow:hidden; }
+        .fp-img img { width:100%; height:100%; object-fit:cover; }
+        .fp-list { list-style:none; font-size:.78rem; color:var(--muted); line-height:2.2; margin-top:10px; }
+
+        /* ── VIDEO ── */
+        .videos { background:#181818; color:#fff; }
+        .videos .sec-title { color:#fff; }
+        .v-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+        .v-card { position:relative; border-radius:10px; overflow:hidden; cursor:pointer; aspect-ratio:16/9; }
+        .v-card img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+        .v-card:hover img { transform:scale(1.06); }
+        .v-card::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,.08)); }
+        .v-play {
+            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+            z-index:5; width:62px; height:62px;
+            background:rgba(255,255,255,.18); backdrop-filter:blur(8px);
+            border:2px solid rgba(255,255,255,.4); border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            transition: all .3s;
+        }
+        .v-card:hover .v-play { background:var(--accent); border-color:var(--accent); transform:translate(-50%,-50%) scale(1.12); }
+        .v-play::after { content:''; border-left:20px solid #fff; border-top:12px solid transparent; border-bottom:12px solid transparent; margin-left:5px; }
+        .v-info { position:absolute; bottom:0; left:0; right:0; padding:18px; z-index:5; }
+        .v-info h3 { font-family:'Noto Serif JP',serif; font-size:.98rem; }
+        .v-info span { font-size:.74rem; color:rgba(255,255,255,.7); }
+        /* modal */
+        .v-modal {
+            position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:2000;
+            display:none; align-items:center; justify-content:center;
+        }
+        .v-modal.open { display:flex; }
+        .v-modal-inner { position:relative; width:90%; max-width:900px; aspect-ratio:16/9; background:#000; border-radius:10px; }
+        .v-modal-inner iframe { width:100%; height:100%; border:none; border-radius:10px; }
+        .v-close { position:absolute; top:-42px; right:0; background:none; border:none; color:#fff; font-size:2.2rem; cursor:pointer; line-height:1; }
+
+        /* ── MEALS ── */
+        .meals { background:var(--white); }
+        .meals-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+        .m-card { border-radius:10px; overflow:hidden; box-shadow:0 2px 20px var(--shadow); }
+        .m-img { height:200px; overflow:hidden; }
+        .m-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+        .m-card:hover .m-img img { transform:scale(1.06); }
+        .m-body { padding:24px; }
+        .m-tag { font-size:.62rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:7px; }
+        .m-body h3 { font-family:'Noto Serif JP',serif; font-size:1.05rem; margin-bottom:10px; color:var(--primary); }
+        .m-body p { font-size:.78rem; color:var(--muted); line-height:1.85; }
+        .timeline { display:grid; grid-template-columns:repeat(4,1fr); position:relative; margin-top:55px; }
+        .timeline::before {
+            content:''; position:absolute; top:20px; left:12.5%; right:12.5%;
+            height:2px; background:linear-gradient(90deg,var(--accent),var(--primary));
+        }
+        .tl-item { text-align:center; padding:0 14px; }
+        .tl-dot {
+            width:40px; height:40px; background:var(--white);
+            border:2px solid var(--accent); border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            margin:0 auto 14px; font-size:.95rem; position:relative; z-index:1;
+        }
+        .tl-item h4 { font-size:.82rem; font-weight:500; margin-bottom:4px; }
+        .tl-item p { font-size:.72rem; color:var(--muted); }
+
+        /* ── AREA ── */
+        .area { background:var(--bg); }
+        .area-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:56px; }
+        .a-card {
+            background:var(--white); border-radius:10px; overflow:hidden;
+            box-shadow:0 2px 15px var(--shadow); transition:transform .3s;
+        }
+        .a-card:hover { transform:translateY(-6px); }
+        .a-img { height:135px; overflow:hidden; }
+        .a-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+        .a-card:hover .a-img img { transform:scale(1.1); }
+        .a-body { padding:14px; }
+        .a-body .ic { font-size:1.15rem; margin-bottom:5px; }
+        .a-body h4 { font-size:.82rem; font-weight:500; margin-bottom:3px; }
+        .a-body p { font-size:.72rem; color:var(--muted); }
+        .area-row { display:grid; grid-template-columns:1fr 1fr; gap:38px; align-items:start; }
+        .access-list { list-style:none; }
+        .access-list li {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:11px 0; border-bottom:1px solid #E8E2DF; font-size:.84rem;
+        }
+        .access-list li .t { color:var(--primary); font-weight:500; font-size:.78rem; }
+        .a-box { background:var(--white); border-radius:10px; padding:28px; box-shadow:0 2px 20px var(--shadow); }
+        .a-feat { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid #F0EBE8; }
+        .a-feat:last-child { border-bottom:none; }
+        .a-feat-ic { font-size:1.4rem; }
+        .a-feat h4 { font-size:.84rem; font-weight:500; }
+        .a-feat p { font-size:.73rem; color:var(--muted); }
+
+        /* ── INQUIRY ── */
+        .inquiry { background:linear-gradient(135deg,var(--primary) 0%,#4E2E3C 100%); color:#fff; }
+        .inquiry .sec-title { color:#fff; }
+        .inq-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+        .inq-form {
+            background:rgba(255,255,255,.1); backdrop-filter:blur(12px);
+            border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:40px;
+        }
+        .f-group { margin-bottom:18px; }
+        .f-group label { display:block; font-size:.78rem; margin-bottom:6px; opacity:.9; }
+        .f-group input,
+        .f-group textarea,
+        .f-group select {
+            width:100%; padding:11px 14px;
+            background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28);
+            border-radius:7px; color:#fff; font-family:'Noto Sans JP',sans-serif;
+            font-size:.84rem; transition:border-color .3s;
+        }
+        .f-group input::placeholder,
+        .f-group textarea::placeholder { color:rgba(255,255,255,.45); }
+        .f-group input:focus,
+        .f-group textarea:focus,
+        .f-group select:focus { outline:none; border-color:var(--accent); }
+        .f-group select option { color:var(--text); background:#fff; }
+        .f-group textarea { resize:vertical; height:95px; }
+        .btn-send {
+            width:100%; padding:14px; background:var(--accent); color:#fff;
+            border:none; border-radius:7px; font-family:'Noto Sans JP',sans-serif;
+            font-size:.9rem; cursor:pointer; letter-spacing:2px; transition:all .3s;
+        }
+        .btn-send:hover { background:#fff; color:var(--primary); transform:translateY(-2px); }
+        .inq-info { display:flex; flex-direction:column; gap:26px; }
+        .inq-plan {
+            background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+            border-radius:14px; padding:28px;
+        }
+        .inq-plan h3 { font-family:'Noto Serif JP',serif; font-size:1.25rem; margin-bottom:8px; }
+        .inq-price { font-family:'Noto Serif JP',serif; font-size:2.2rem; color:var(--accent); margin-bottom:10px; }
+        .inq-price small { font-size:.85rem; font-family:'Noto Sans JP',sans-serif; }
+        .inq-plan p { font-size:.8rem; line-height:1.85; opacity:.9; }
+        .inq-list { list-style:none; margin-top:14px; font-size:.78rem; opacity:.9; line-height:2.2; }
+        .line-btn {
+            display:flex; align-items:center; gap:14px;
+            background:#06C755; color:#fff; padding:18px 26px;
+            border-radius:12px; text-decoration:none; font-size:.98rem; font-weight:500;
+            transition:all .3s; justify-content:center;
+        }
+        .line-btn:hover { background:#05A347; transform:translateY(-3px); box-shadow:0 12px 32px rgba(6,199,85,.3); }
+        .qr-box {
+            display:flex; align-items:center; gap:18px;
+            background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+            border-radius:12px; padding:20px;
+        }
+        .qr-img { width:96px; height:96px; background:#fff; border-radius:8px; padding:8px; flex-shrink:0; }
+        .qr-txt h4 { font-size:.88rem; margin-bottom:5px; }
+        .qr-txt p { font-size:.74rem; opacity:.82; line-height:1.65; }
+
+        /* ── SNS ── */
+        .sns { background:var(--bg); }
+        .sns-tabs { display:flex; gap:14px; margin-bottom:38px; }
+        .sns-tab {
+            display:flex; align-items:center; gap:8px; padding:10px 26px;
+            border-radius:25px; cursor:pointer; border:2px solid #DDD8D5;
+            background:var(--white); font-family:'Noto Sans JP',sans-serif;
+            font-size:.84rem; transition:all .3s; color:var(--text);
+        }
+        .sns-tab.ig { border-color:#E1306C; background:#E1306C; color:#fff; }
+        .sns-tab.tt { border-color:#111; background:#111; color:#fff; }
+        .sns-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+        .sns-post {
+            background:var(--white); border-radius:12px; overflow:hidden;
+            box-shadow:0 2px 16px var(--shadow); transition:transform .3s;
+        }
+        .sns-post:hover { transform:translateY(-5px); }
+        .sns-hd { display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid #F0EBE8; }
+        .sns-av {
+            width:34px; height:34px; border-radius:50%;
+            background:linear-gradient(45deg,#F09433,#E6683C,#DC2743,#CC2366,#BC1888);
+            display:flex; align-items:center; justify-content:center; font-size:.95rem;
+        }
+        .sns-av.tt { background:linear-gradient(45deg,#010101,#69C9D0); }
+        .sns-user { font-size:.78rem; font-weight:500; }
+        .sns-pi { aspect-ratio:1; overflow:hidden; }
+        .sns-pi img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+        .sns-post:hover .sns-pi img { transform:scale(1.06); }
+        .sns-ft { padding:12px 14px; }
+        .sns-likes { font-size:.72rem; color:var(--muted); margin-bottom:4px; }
+        .sns-cap { font-size:.76rem; line-height:1.65; }
+        .sns-date { font-size:.68rem; color:var(--muted); margin-top:4px; }
+
+        /* ── MAP & CONTACT ── */
+        .contact { background:var(--white); }
+        .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+        .map-wrap { border-radius:12px; overflow:hidden; box-shadow:0 6px 32px var(--shadow); height:420px; }
+        .map-wrap iframe { width:100%; height:100%; border:none; }
+        .c-info { display:flex; flex-direction:column; gap:22px; }
+        .c-item { display:flex; gap:18px; align-items:flex-start; }
+        .c-ic {
+            width:48px; height:48px; flex-shrink:0;
+            background:linear-gradient(135deg,var(--accent),var(--primary));
+            border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem;
+        }
+        .c-txt h4 { font-size:.7rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:4px; }
+        .c-txt p, .c-txt a { font-size:.94rem; color:var(--text); line-height:1.65; }
+        .c-txt a { text-decoration:none; font-family:'Noto Serif JP',serif; font-size:1.5rem; color:var(--primary); font-weight:500; }
+        .c-hours { background:var(--bg); border-radius:10px; padding:20px; }
+        .c-hours h4 { font-size:.78rem; font-weight:500; color:var(--primary); margin-bottom:12px; }
+        .h-row { display:flex; justify-content:space-between; font-size:.78rem; padding:6px 0; border-bottom:1px solid #E8E2DF; }
+        .h-row:last-child { border-bottom:none; }
+
+        /* ── FOOTER ── */
+        footer { background:#191919; color:rgba(255,255,255,.65); padding:64px 0 30px; }
+        .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:38px; margin-bottom:50px; }
+        .f-brand { font-family:'Noto Serif JP',serif; font-size:1.45rem; color:#fff; margin-bottom:14px; }
+        .f-desc { font-size:.78rem; line-height:1.9; margin-bottom:20px; }
+        .f-sns { display:flex; gap:10px; }
+        .f-sns a {
+            width:36px; height:36px; background:rgba(255,255,255,.1);
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            color:#fff; text-decoration:none; font-size:.95rem; transition:all .3s;
+        }
+        .f-sns a:hover { background:var(--accent); }
+        .f-col h4 { font-size:.74rem; letter-spacing:2px; text-transform:uppercase; color:#fff; margin-bottom:18px; }
+        .f-col ul { list-style:none; }
+        .f-col ul li { margin-bottom:10px; }
+        .f-col ul li a { color:rgba(255,255,255,.58); text-decoration:none; font-size:.78rem; transition:color .3s; }
+        .f-col ul li a:hover { color:var(--accent); }
+        .f-bottom {
+            border-top:1px solid rgba(255,255,255,.1); padding-top:24px;
+            display:flex; justify-content:space-between; align-items:center; font-size:.72rem;
+        }
+
+        /* ── SCROLL TOP ── */
+        .scroll-top {
+            position:fixed; bottom:28px; right:28px; width:46px; height:46px;
+            background:var(--primary); color:#fff; border:none; border-radius:50%;
+            cursor:pointer; font-size:1.2rem; box-shadow:0 4px 18px rgba(0,0,0,.22);
+            transition:all .3s; opacity:0; pointer-events:none; z-index:500;
+        }
+        .scroll-top.show { opacity:1; pointer-events:all; }
+        .scroll-top:hover { background:var(--accent); transform:translateY(-3px); }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:900px){
+            .nav-links { display:none; }
+            .about-grid, .inq-grid, .contact-grid { grid-template-columns:1fr; }
+            .room-grid, .meals-grid { grid-template-columns:1fr 1fr; }
+            .area-grid { grid-template-columns:repeat(2,1fr); }
+            .v-grid { grid-template-columns:1fr; }
+            .footer-grid { grid-template-columns:1fr 1fr; }
+            .timeline { grid-template-columns:1fr 1fr; }
+            .timeline::before { display:none; }
+            .fp-grid, .fp-card { grid-template-columns:1fr; }
+            .sns-grid { grid-template-columns:1fr 1fr; }
+            .area-row { grid-template-columns:1fr; }
+        }
+        @media(max-width:550px){
+            .room-grid, .meals-grid, .sns-grid { grid-template-columns:1fr; }
+            .area-grid { grid-template-columns:1fr 1fr; }
+            .container { padding:0 20px; }
+            section { padding:70px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav id="nav">
+    <div class="nav-logo">Crafton</div>
+    <ul class="nav-links">
+        <li><a href="#rooms">お部屋</a></li>
+        <li><a href="#videos">動画</a></li>
+        <li><a href="#meals">食事・イベント</a></li>
+        <li><a href="#area">周辺環境</a></li>
+        <li><a href="#sns">SNS</a></li>
+        <li><a href="#contact">アクセス</a></li>
+        <li><a href="#inquiry" class="nav-cta">見学予約</a></li>
+    </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+    <div class="hero-slides" id="heroSlides">
+        <div class="hero-slide active">
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&q=80" alt="快適な個室">
+        </div>
+        <div class="hero-slide">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1600&q=80" alt="明るいリビング">
+        </div>
+        <div class="hero-slide">
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80" alt="清潔なダイニング">
+        </div>
+        <div class="hero-slide">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1600&q=80" alt="清潔なバスルーム">
+        </div>
+        <div class="hero-slide">
+            <img src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=1600&q=80" alt="美しい外観">
+        </div>
+    </div>
+
+    <div class="hero-content">
+        <p class="hero-tag">Group Home Crafton</p>
+        <h1>ここが、<br>わたしの<br>居場所。</h1>
+        <p class="hero-sub">安心・快適・ぬくもりのある暮らしを</p>
+    </div>
+
+    <button class="hero-arrow hero-prev" onclick="moveSlide(-1)">&#10094;</button>
+    <button class="hero-arrow hero-next" onclick="moveSlide(1)">&#10095;</button>
+
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-bar" id="heroBar"></div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="fi">
+                <div class="about-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt="グループホームの様子">
+                    <div class="about-badge">
+                        <span class="num">10+</span>
+                        <span style="font-size:.7rem">年の実績</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <span class="sec-label fu">About Us</span>
+                <h2 class="sec-title fu d1">
+                    <span class="hl">ホテルのような</span>上質な<br>グループホームの暮らし
+                </h2>
+                <p class="sec-desc fu d2">
+                    グループホーム Craftonは、一人ひとりが安心して自分らしく生活できる場所です。上質なインテリア、充実した設備、温かいスタッフのサポートで、毎日を丁寧に過ごしていただけます。
+                </p>
+                <div class="about-features fu d3">
+                    <div class="about-feat">
+                        <span class="about-feat-ic">🏠</span>
+                        <div><h4>プライベート空間</h4><p>全室個室で安心のプライバシー</p></div>
+                    </div>
+                    <div class="about-feat">
+                        <span class="about-feat-ic">👩‍⚕️</span>
+                        <div><h4>24時間サポート</h4><p>経験豊富なスタッフが常駐</p></div>
+                    </div>
+                    <div class="about-feat">
+                        <span class="about-feat-ic">🍽️</span>
+                        <div><h4>食事提供</h4><p>栄養バランスの取れた毎日の食事</p></div>
+                    </div>
+                    <div class="about-feat">
+                        <span class="about-feat-ic">🎉</span>
+                        <div><h4>イベント充実</h4><p>季節のイベントや趣味活動</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ROOMS ===== -->
+<section class="rooms" id="rooms">
+    <div class="container">
+        <span class="sec-label fu">Rooms & Floor Plans</span>
+        <h2 class="sec-title fu d1"><span class="hl">お部屋・間取り</span>紹介</h2>
+        <p class="sec-desc fu d2">全室個室で、快適なプライベート空間をご用意しています。</p>
+
+        <div class="r-tabs">
+            <button class="r-tab on" onclick="switchTab(this,'rp-photo')">お部屋写真</button>
+            <button class="r-tab" onclick="switchTab(this,'rp-floor')">間取り図</button>
+            <button class="r-tab" onclick="switchTab(this,'rp-common')">共用施設</button>
+        </div>
+
+        <div class="r-panels">
+            <!-- 写真 -->
+            <div id="rp-photo" class="on">
+                <div class="room-grid">
+                    <div class="room-card fu">
+                        <div class="rc-img">
+                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80" alt="Aタイプ" loading="lazy">
+                            <span class="rc-badge">Aタイプ</span>
+                        </div>
+                        <div class="rc-body">
+                            <h3>スタンダードルーム</h3>
+                            <div class="rc-specs"><span>📐 12畳</span><span>🛁 バス付</span><span>🪟 南向き</span></div>
+                            <div class="rc-price">¥85,000<small> / 月</small></div>
+                        </div>
+                    </div>
+                    <div class="room-card fu d1">
+                        <div class="rc-img">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80" alt="Bタイプ" loading="lazy">
+                            <span class="rc-badge">Bタイプ</span>
+                        </div>
+                        <div class="rc-body">
+                            <h3>デラックスルーム</h3>
+                            <div class="rc-specs"><span>📐 15畳</span><span>🛁 バス付</span><span>🪟 東向き</span></div>
+                            <div class="rc-price">¥95,000<small> / 月</small></div>
+                        </div>
+                    </div>
+                    <div class="room-card fu d2">
+                        <div class="rc-img">
+                            <img src="https://images.unsplash.com/photo-1617325247935-2df5c71e9e0f?w=600&q=80" alt="Cタイプ" loading="lazy">
+                            <span class="rc-badge">Cタイプ</span>
+                        </div>
+                        <div class="rc-body">
+                            <h3>スイートルーム</h3>
+                            <div class="rc-specs"><span>📐 20畳</span><span>🛁 バス付</span><span>🪟 角部屋</span></div>
+                            <div class="rc-price">¥115,000<small> / 月</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 間取り -->
+            <div id="rp-floor">
+                <div class="fp-grid">
+                    <div class="fp-card fu">
+                        <div class="fp-img">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="間取りA" loading="lazy">
+                        </div>
+                        <div>
+                            <span class="rc-badge" style="position:static;display:inline-block;margin-bottom:10px;">Aタイプ 12畳</span>
+                            <h3 style="font-family:'Noto Serif JP',serif;font-size:1.05rem;color:var(--primary);margin-bottom:8px;">スタンダードルーム</h3>
+                            <ul class="fp-list">
+                                <li>✓ 個室（12畳）</li><li>✓ バス・トイレ付</li>
+                                <li>✓ エアコン完備</li><li>✓ 収納スペース</li>
+                                <li>✓ フローリング</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="fp-card fu d1">
+                        <div class="fp-img">
+                            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=400&q=80" alt="間取りB" loading="lazy">
+                        </div>
+                        <div>
+                            <span class="rc-badge" style="position:static;display:inline-block;margin-bottom:10px;">Bタイプ 15畳</span>
+                            <h3 style="font-family:'Noto Serif JP',serif;font-size:1.05rem;color:var(--primary);margin-bottom:8px;">デラックスルーム</h3>
+                            <ul class="fp-list">
+                                <li>✓ 個室（15畳）</li><li>✓ バス・トイレ付</li>
+                                <li>✓ ミニキッチン</li><li>✓ ウォークインCL</li>
+                                <li>✓ バルコニー付</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 共用 -->
+            <div id="rp-common">
+                <div class="room-grid">
+                    <div class="room-card fu">
+                        <div class="rc-img">
+                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="共有リビング" loading="lazy">
+                        </div>
+                        <div class="rc-body">
+                            <h3>共有リビング</h3>
+                            <p style="font-size:.78rem;color:var(--muted);">広々とした共有スペースでゆったりと過ごせます。</p>
+                        </div>
+                    </div>
+                    <div class="room-card fu d1">
+                        <div class="rc-img">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="ダイニング" loading="lazy">
+                        </div>
+                        <div class="rc-body">
+                            <h3>ダイニング</h3>
+                            <p style="font-size:.78rem;color:var(--muted);">明るく清潔な食事スペースです。</p>
+                        </div>
+                    </div>
+                    <div class="room-card fu d2">
+                        <div class="rc-img">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="ガーデン" loading="lazy">
+                        </div>
+                        <div class="rc-body">
+                            <h3>ガーデン・テラス</h3>
+                            <p style="font-size:.78rem;color:var(--muted);">緑に囲まれた憩いの空間です。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== VIDEO GALLERY ===== -->
+<section class="videos" id="videos">
+    <div class="container">
+        <span class="sec-label fu" style="color:var(--accent)">Room Tour</span>
+        <h2 class="sec-title fu d1"><span class="hl" style="color:#fff">ルームツアー</span><span style="color:#fff">動画ギャラリー</span></h2>
+        <p class="sec-desc fu d2" style="color:rgba(255,255,255,.7)">実際のお部屋の雰囲気を動画でご確認いただけます。</p>
+
+        <div class="v-grid">
+            <div class="v-card fu" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+                <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="スタンダードルームツアー" loading="lazy">
+                <div class="v-play"></div>
+                <div class="v-info"><h3>スタンダードルームツアー</h3><span>▷ 3:45</span></div>
+            </div>
+            <div class="v-card fu d1" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt="共有スペースツアー" loading="lazy">
+                <div class="v-play"></div>
+                <div class="v-info"><h3>共有スペースツアー</h3><span>▷ 2:20</span></div>
+            </div>
+            <div class="v-card fu d2" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="ダイニングツアー" loading="lazy">
+                <div class="v-play"></div>
+                <div class="v-info"><h3>ダイニング・キッチンツアー</h3><span>▷ 1:58</span></div>
+            </div>
+            <div class="v-card fu d3" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1')">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" alt="外観ツアー" loading="lazy">
+                <div class="v-play"></div>
+                <div class="v-info"><h3>外観・周辺環境ツアー</h3><span>▷ 4:12</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Video Modal -->
+<div class="v-modal" id="vModal" onclick="closeVid(event)">
+    <div class="v-modal-inner">
+        <button class="v-close" onclick="closeVid()">×</button>
+        <iframe id="vFrame" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
+<!-- ===== MEALS & EVENTS ===== -->
+<section class="meals" id="meals">
+    <div class="container">
+        <span class="sec-label fu">Meals & Events</span>
+        <h2 class="sec-title fu d1"><span class="hl">食事・イベント</span>について</h2>
+        <p class="sec-desc fu d2">毎日の食事から季節のイベントまで、豊かな生活をサポートします。</p>
+
+        <div class="meals-grid">
+            <div class="m-card fu">
+                <div class="m-img"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80" alt="朝食" loading="lazy"></div>
+                <div class="m-body">
+                    <span class="m-tag">Breakfast</span>
+                    <h3>朝食（和洋選択）</h3>
+                    <p>栄養バランスを考えた和食・洋食の選択制。新鮮な食材を使った毎朝の朝食で一日を元気にスタート。</p>
+                </div>
+            </div>
+            <div class="m-card fu d1">
+                <div class="m-img"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80" alt="昼食" loading="lazy"></div>
+                <div class="m-body">
+                    <span class="m-tag">Lunch</span>
+                    <h3>昼食（日替わり）</h3>
+                    <p>栄養士が監修した日替わりメニュー。季節の食材を取り入れたバリエーション豊かな昼食をご提供。</p>
+                </div>
+            </div>
+            <div class="m-card fu d2">
+                <div class="m-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="夕食" loading="lazy"></div>
+                <div class="m-body">
+                    <span class="m-tag">Dinner</span>
+                    <h3>夕食（特製コース）</h3>
+                    <p>一日の締めくくりにふさわしい、心温まる夕食。地元の食材を使った特製メニューでゆっくりとどうぞ。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fu d2" style="margin-top:64px">
+            <h3 style="font-family:'Noto Serif JP',serif;font-size:1.4rem;color:var(--primary);margin-bottom:32px;">年間イベントカレンダー</h3>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-dot">🌸</div>
+                    <h4>花見・春のお茶会</h4><p>3〜4月</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot">🎋</div>
+                    <h4>七夕まつり</h4><p>7月</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot">🍂</div>
+                    <h4>紅葉ドライブ</h4><p>11月</p>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot">🎄</div>
+                    <h4>クリスマス会</h4><p>12月</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== AREA ===== -->
+<section class="area" id="area">
+    <div class="container">
+        <span class="sec-label fu">Surrounding Area</span>
+        <h2 class="sec-title fu d1"><span class="hl">充実した</span>周辺環境</h2>
+        <p class="sec-desc fu d2">生活に必要な施設が徒歩圏内に揃っています。</p>
+
+        <div class="area-grid">
+            <div class="a-card fu">
+                <div class="a-img"><img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=400&q=80" alt="病院" loading="lazy"></div>
+                <div class="a-body"><div class="ic">🏥</div><h4>総合病院</h4><p>徒歩5分</p></div>
+            </div>
+            <div class="a-card fu d1">
+                <div class="a-img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80" alt="スーパー" loading="lazy"></div>
+                <div class="a-body"><div class="ic">🛒</div><h4>スーパーマーケット</h4><p>徒歩3分</p></div>
+            </div>
+            <div class="a-card fu d2">
+                <div class="a-img"><img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80" alt="公園" loading="lazy"></div>
+                <div class="a-body"><div class="ic">🌳</div><h4>市民公園</h4><p>徒歩7分</p></div>
+            </div>
+            <div class="a-card fu d3">
+                <div class="a-img"><img src="https://images.unsplash.com/photo-1564419320461-6870880221ad?w=400&q=80" alt="駅" loading="lazy"></div>
+                <div class="a-body"><div class="ic">🚃</div><h4>最寄り駅</h4><p>徒歩10分</p></div>
+            </div>
+        </div>
+
+        <div class="area-row fu">
+            <div>
+                <h3 style="font-family:'Noto Serif JP',serif;font-size:1.3rem;color:var(--primary);margin-bottom:18px;">周辺施設へのアクセス</h3>
+                <ul class="access-list">
+                    <li><span>🏥 ○○総合病院</span><span class="t">徒歩 5分</span></li>
+                    <li><span>🛒 イオンスーパー</span><span class="t">徒歩 3分</span></li>
+                    <li><span>🌳 中央公園</span><span class="t">徒歩 7分</span></li>
+                    <li><span>🚃 ○○駅</span><span class="t">徒歩 10分</span></li>
+                    <li><span>🏦 郵便局</span><span class="t">徒歩 4分</span></li>
+                    <li><span>🍽️ レストラン街</span><span class="t">徒歩 8分</span></li>
+                    <li><span>💊 調剤薬局</span><span class="t">徒歩 2分</span></li>
+                </ul>
+            </div>
+            <div class="a-box">
+                <h3 style="font-family:'Noto Serif JP',serif;font-size:1.1rem;color:var(--primary);margin-bottom:18px;">エリアの特徴</h3>
+                <div class="a-feat"><span class="a-feat-ic">🛡️</span><div><h4>安全・安心エリア</h4><p>犯罪発生率の低い閑静な住宅地</p></div></div>
+                <div class="a-feat"><span class="a-feat-ic">🌿</span><div><h4>緑豊かな環境</h4><p>公園・緑地が充実しています</p></div></div>
+                <div class="a-feat"><span class="a-feat-ic">🚌</span><div><h4>交通アクセス良好</h4><p>バス・電車の便が充実</p></div></div>
+                <div class="a-feat"><span class="a-feat-ic">🏪</span><div><h4>生活施設が揃う</h4><p>買い物・医療・娯楽に便利</p></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== INQUIRY ===== -->
+<section class="inquiry" id="inquiry">
+    <div class="container">
+        <span class="sec-label fu">Contact & Experience</span>
+        <h2 class="sec-title fu d1">
+            <span class="hl" style="color:var(--accent)">見学・体験</span><span style="color:#fff">のご案内</span>
+        </h2>
+        <p class="sec-desc fu d2" style="color:rgba(255,255,255,.82)">
+            1日体験入居（¥3,000）も受付中。まずはお気軽にお問い合わせください。
+        </p>
+
+        <div class="inq-grid">
+            <!-- Form -->
+            <div class="inq-form fu">
+                <form onsubmit="sendForm(event)">
+                    <div class="f-group">
+                        <label>お名前 *</label>
+                        <input type="text" placeholder="山田 太郎" required>
+                    </div>
+                    <div class="f-group">
+                        <label>電話番号 *</label>
+                        <input type="tel" placeholder="090-0000-0000" required>
+                    </div>
+                    <div class="f-group">
+                        <label>メールアドレス</label>
+                        <input type="email" placeholder="example@email.com">
+                    </div>
+                    <div class="f-group">
+                        <label>ご希望 *</label>
+                        <select required>
+                            <option value="">選択してください</option>
+                            <option>施設見学</option>
+                            <option>1日体験入居（3,000円）</option>
+                            <option>入居相談</option>
+                            <option>資料請求</option>
+                        </select>
+                    </div>
+                    <div class="f-group">
+                        <label>ご希望日時</label>
+                        <input type="datetime-local">
+                    </div>
+                    <div class="f-group">
+                        <label>ご質問・ご要望</label>
+                        <textarea placeholder="お気軽にご記入ください"></textarea>
+                    </div>
+                    <button type="submit" class="btn-send" id="sendBtn">送信する →</button>
+                </form>
+            </div>
+
+            <!-- Info -->
+            <div class="inq-info fu d1">
+                <div class="inq-plan">
+                    <h3>🌟 1日体験入居プラン</h3>
+                    <div class="inq-price">¥3,000<small> / 日</small></div>
+                    <p>実際に一日過ごしていただけます。食事・アクティビティも体験でき、入居前の不安を解消できます。スタッフが丁寧にご案内します。</p>
+                    <ul class="inq-list">
+                        <li>✓ 3食付き</li>
+                        <li>✓ 全施設利用可</li>
+                        <li>✓ スタッフ同行ツアー</li>
+                        <li>✓ 入居相談・資料提供</li>
+                    </ul>
+                </div>
+
+                <a href="https://line.me/ti/p/XXXXXXXXXX" class="line-btn" target="_blank">
+                    <span style="font-size:2rem">💬</span>
+                    <div>
+                        <div style="font-size:.72rem;opacity:.88">LINEでかんたん相談</div>
+                        <div style="font-size:1rem">LINE でお問い合わせ</div>
+                    </div>
+                </a>
+
+                <div class="qr-box">
+                    <div class="qr-img">
+                        <!-- QR コード（実際のLINE QRに差し替えてください） -->
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                            <rect width="100" height="100" fill="white"/>
+                            <rect x="10" y="10" width="30" height="30" fill="none" stroke="#000" stroke-width="3"/>
+                            <rect x="16" y="16" width="18" height="18" fill="#000"/>
+                            <rect x="60" y="10" width="30" height="30" fill="none" stroke="#000" stroke-width="3"/>
+                            <rect x="66" y="16" width="18" height="18" fill="#000"/>
+                            <rect x="10" y="60" width="30" height="30" fill="none" stroke="#000" stroke-width="3"/>
+                            <rect x="16" y="66" width="18" height="18" fill="#000"/>
+                            <rect x="50" y="50" width="7" height="7" fill="#000"/>
+                            <rect x="61" y="50" width="7" height="7" fill="#000"/>
+                            <rect x="72" y="50" width="7" height="7" fill="#000"/>
+                            <rect x="83" y="50" width="7" height="7" fill="#000"/>
+                            <rect x="50" y="61" width="7" height="7" fill="#000"/>
+                            <rect x="72" y="61" width="7" height="7" fill="#000"/>
+                            <rect x="50" y="72" width="7" height="7" fill="#000"/>
+                            <rect x="61" y="72" width="7" height="7" fill="#000"/>
+                            <rect x="72" y="72" width="7" height="7" fill="#000"/>
+                            <rect x="83" y="83" width="7" height="7" fill="#000"/>
+                            <rect x="50" y="83" width="7" height="7" fill="#000"/>
+                            <rect x="61" y="83" width="7" height="7" fill="#000"/>
+                        </svg>
+                    </div>
+                    <div class="qr-txt">
+                        <h4>📱 QRコードでLINE追加</h4>
+                        <p>スマートフォンでQRコードを読み取り、LINEでお気軽にご相談ください。24時間受付中です。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SNS ===== -->
+<section class="sns" id="sns">
+    <div class="container">
+        <span class="sec-label fu">Social Media</span>
+        <h2 class="sec-title fu d1"><span class="hl">最新の</span>SNS投稿</h2>
+        <p class="sec-desc fu d2">日々の暮らしをSNSで発信中！フォローしてください。</p>
+
+        <div class="sns-tabs">
+            <button class="sns-tab ig" id="igTab" onclick="switchSNS('ig')">📷 Instagram</button>
+            <button class="sns-tab" id="ttTab" onclick="switchSNS('tt')">🎵 TikTok</button>
+        </div>
+
+        <!-- Instagram -->
+        <div id="sns-ig" class="sns-grid">
+            <div class="sns-post fu">
+                <div class="sns-hd"><div class="sns-av">📷</div><div class="sns-user">crafton_grouphome</div></div>
+                <div class="sns-pi"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400&q=80" alt="投稿1" loading="lazy"></div>
+                <div class="sns-ft">
+                    <div class="sns-likes">❤️ 124 likes</div>
+                    <div class="sns-cap">今日のランチは季節の野菜たっぷり！栄養士が愛情込めて作りました🌿 #グループホーム #crafton</div>
+                    <div class="sns-date">2日前</div>
+                </div>
+            </div>
+            <div class="sns-post fu d1">
+                <div class="sns-hd"><div class="sns-av">📷</div><div class="sns-user">crafton_grouphome</div></div>
+                <div class="sns-pi"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" alt="投稿2" loading="lazy"></div>
+                <div class="sns-ft">
+                    <div class="sns-likes">❤️ 89 likes</div>
+                    <div class="sns-cap">晴天の庭でお散歩タイム☀️ みなさん気持ちよさそうでした #日常 #笑顔</div>
+                    <div class="sns-date">4日前</div>
+                </div>
+            </div>
+            <div class="sns-post fu d2">
+                <div class="sns-hd"><div class="sns-av">📷</div><div class="sns-user">crafton_grouphome</div></div>
+                <div class="sns-pi"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&q=80" alt="投稿3" loading="lazy"></div>
+                <div class="sns-ft">
+                    <div class="sns-likes">❤️ 156 likes</div>
+                    <div class="sns-cap">新しいお部屋が完成しました✨ 明るく広々とした空間です #新生活 #お部屋紹介</div>
+                    <div class="sns-date">1週間前</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TikTok -->
+        <div id="sns-tt" class="sns-grid" style="display:none">
+            <div class="sns-post fu">
+                <div class="sns-hd"><div class="sns-av tt">🎵</div><div class="sns-user">crafton_home</div></div>
+                <div class="sns-pi" style="aspect-ratio:9/16;max-height:280px"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80" alt="TikTok1" loading="lazy"></div>
+                <div class="sns-ft">
+                    <div class="sns-likes">▶️ 2.3K views ・ ❤️ 234</div>
+                    <div class="sns-cap">ルームツアー🏠✨ #グループホーム #お部屋紹介 #crafton</div>
+                    <div class="sns-date">3日前</div>
+                </div>
+            </div>
+            <div class="sns-post fu d1">
+                <div class="sns-hd"><div class="sns-av tt">🎵</div><div class="sns-user">crafton_home</div></div>
+                <div class="sns-pi" style="aspect-ratio:9/16;max-height:280px"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="TikTok2" loading="lazy"></div>
+                <div class="sns-ft">
+                    <div class="sns-likes">▶️ 1.8K views ・ ❤️ 189</div>
+                    <div class="sns-cap">今日の夕食🍽️ 美味しそう！#食事 #手作り #安心</div>
+                    <div class="sns-date">5日前</div>
+                </div>
+            </div>
+            <div class="sns-post fu d2">
+                <div class="sns-hd"><div class="sns-av tt">🎵</div><div class="sns-user">crafton_home</div></div>
+                <div class="sns-pi" style="aspect-ratio:9/16;max-height:280px"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&q=80" alt="TikTok3" loading="lazy"></div>
+                <div class="sns-ft">
+                    <div class="sns-likes">▶️ 3.1K views ・ ❤️ 312</div>
+                    <div class="sns-cap">イベントの様子🎉 みんなで楽しみました！ #イベント #笑顔 #楽しい</div>
+                    <div class="sns-date">1週間前</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center;margin-top:42px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
+            <a href="https://www.instagram.com/" target="_blank" class="sns-follow-btn" style="border-color:#E1306C;color:#E1306C" onmouseover="this.style.background='#E1306C';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#E1306C'">
+                📷 Instagramをフォロー
+            </a>
+            <a href="https://www.tiktok.com/" target="_blank" class="sns-follow-btn" style="border-color:#111;color:#111" onmouseover="this.style.background='#111';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#111'">
+                🎵 TikTokをフォロー
+            </a>
+        </div>
+        <style>
+            .sns-follow-btn {
+                display:inline-flex; align-items:center; gap:8px;
+                padding:11px 26px; border:2px solid; border-radius:25px;
+                text-decoration:none; font-size:.84rem; transition:all .3s;
+                background:transparent;
+            }
+        </style>
+    </div>
+</section>
+
+<!-- ===== MAP & CONTACT ===== -->
+<section class="contact" id="contact">
+    <div class="container">
+        <span class="sec-label fu">Access & Contact</span>
+        <h2 class="sec-title fu d1"><span class="hl">アクセス・</span>お問い合わせ</h2>
+
+        <div class="contact-grid">
+            <div class="fi">
+                <div class="map-wrap">
+                    <!-- Google マップ（実際の住所のURLに差し替えてください） -->
+                    <iframe
+                        src="https://maps.google.com/maps?q=大阪市西区靭本町&output=embed&hl=ja&z=15"
+                        allowfullscreen loading="lazy"
+                        title="グループホーム Crafton 地図">
+                    </iframe>
+                </div>
+                <p style="margin-top:12px;font-size:.75rem;color:var(--muted);">※ 上記は参考マップです。実際の住所に合わせてURLを変更してください。</p>
+            </div>
+
+            <div class="c-info fu d1">
+                <div class="c-item">
+                    <div class="c-ic">📍</div>
+                    <div class="c-txt">
+                        <h4>住所</h4>
+                        <p>〒550-0001<br>大阪府大阪市西区靭本町1-1-1<br>Craftonビル</p>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-ic">📞</div>
+                    <div class="c-txt">
+                        <h4>電話番号</h4>
+                        <a href="tel:0612345678">06-1234-5678</a>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-ic">📠</div>
+                    <div class="c-txt"><h4>FAX</h4><p>06-1234-5679</p></div>
+                </div>
+                <div class="c-item">
+                    <div class="c-ic">✉️</div>
+                    <div class="c-txt"><h4>メールアドレス</h4><p>info@crafton-home.jp</p></div>
+                </div>
+
+                <div class="c-hours">
+                    <h4>📅 受付時間</h4>
+                    <div class="h-row"><span>月〜金曜日</span><span>9:00 〜 18:00</span></div>
+                    <div class="h-row"><span>土曜日</span><span>9:00 〜 17:00</span></div>
+                    <div class="h-row"><span>日・祝日</span><span>10:00 〜 16:00</span></div>
+                    <p style="margin-top:10px;font-size:.72rem;color:var(--accent)">※ LINEは24時間受付中</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="f-brand">Group Home Crafton</div>
+                <p class="f-desc">グループホーム Craftonは、一人ひとりが安心して自分らしく生活できる場所を提供しています。上質な空間と温かいサポートで、豊かな毎日をお手伝いします。</p>
+                <div class="f-sns">
+                    <a href="https://www.instagram.com/" target="_blank" title="Instagram">📷</a>
+                    <a href="https://www.tiktok.com/" target="_blank" title="TikTok">🎵</a>
+                    <a href="https://line.me/" target="_blank" title="LINE">💬</a>
+                </div>
+            </div>
+            <div class="f-col">
+                <h4>施設案内</h4>
+                <ul>
+                    <li><a href="#about">グループホームについて</a></li>
+                    <li><a href="#rooms">お部屋・間取り</a></li>
+                    <li><a href="#videos">ルームツアー動画</a></li>
+                    <li><a href="#meals">食事・イベント</a></li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h4>サービス</h4>
+                <ul>
+                    <li><a href="#area">周辺環境</a></li>
+                    <li><a href="#inquiry">見学予約</a></li>
+                    <li><a href="#inquiry">体験入居（¥3,000）</a></li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h4>お役立ち情報</h4>
+                <ul>
+                    <li><a href="#">グループホームとは</a></li>
+                    <li><a href="#">費用について</a></li>
+                    <li><a href="#">よくある質問</a></li>
+                    <li><a href="#">スタッフ紹介</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="f-bottom">
+            <span>© 2024 Group Home Crafton. All rights reserved.</span>
+            <span>〒550-0001 大阪府大阪市西区靭本町1-1-1 ｜ TEL: 06-1234-5678</span>
+        </div>
+    </div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+/* ── HERO SLIDER ── */
+let cur = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const N = slides.length;
+const bar = document.getElementById('heroBar');
+const dotsWrap = document.getElementById('heroDots');
+let timer, barVal = 0;
+const DUR = 5000;
+
+// Build dots
+slides.forEach((_,i) => {
+    const d = document.createElement('button');
+    d.className = 'hero-dot' + (i===0?' active':'');
+    d.onclick = () => goTo(i);
+    dotsWrap.appendChild(d);
+});
+
+function goTo(n) {
+    slides[cur].classList.remove('active');
+    dotsWrap.children[cur].classList.remove('active');
+    cur = (n + N) % N;
+    slides[cur].classList.add('active');
+    dotsWrap.children[cur].classList.add('active');
+    resetBar();
+}
+
+function moveSlide(dir) { goTo(cur + dir); }
+
+function resetBar() {
+    clearInterval(timer);
+    barVal = 0;
+    bar.style.width = '0%';
+    const step = 100 / (DUR / 60);
+    timer = setInterval(() => {
+        barVal += step;
+        bar.style.width = Math.min(barVal, 100) + '%';
+        if (barVal >= 100) goTo(cur + 1);
+    }, 60);
+}
+resetBar();
+
+// Click on slide also advances
+document.getElementById('heroSlides').addEventListener('click', (e) => {
+    if (!e.target.closest('.hero-arrow')) goTo(cur + 1);
+});
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+const stBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 70);
+    stBtn.classList.toggle('show', window.scrollY > 500);
+});
+
+/* ── PARALLAX HERO ── */
+window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    document.querySelectorAll('.hero-slide img').forEach(img => {
+        img.style.transform = `translateY(${y * 0.28}px)`;
+    });
+});
+
+/* ── INTERSECTION OBSERVER (fade + pink underline) ── */
+const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.classList.add('on');
+            io.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.14 });
+document.querySelectorAll('.fu, .fi').forEach(el => io.observe(el));
+
+const hlObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('go'), 280);
+            hlObs.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.5 });
+document.querySelectorAll('.hl').forEach(el => hlObs.observe(el));
+
+/* ── ROOM TABS ── */
+function switchTab(btn, id) {
+    document.querySelectorAll('.r-tab').forEach(t => t.classList.remove('on'));
+    document.querySelectorAll('.r-panels > div').forEach(p => p.classList.remove('on'));
+    btn.classList.add('on');
+    document.getElementById(id).classList.add('on');
+}
+
+/* ── VIDEO MODAL ── */
+function openVid(url) {
+    document.getElementById('vFrame').src = url;
+    document.getElementById('vModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeVid(e) {
+    if (!e || e.target === document.getElementById('vModal') || e.target.closest('.v-close')) {
+        document.getElementById('vFrame').src = '';
+        document.getElementById('vModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+/* ── SNS TABS ── */
+function switchSNS(platform) {
+    const igTab = document.getElementById('igTab');
+    const ttTab = document.getElementById('ttTab');
+    igTab.className = 'sns-tab' + (platform==='ig'?' ig':'');
+    ttTab.className = 'sns-tab' + (platform==='tt'?' tt':'');
+    document.getElementById('sns-ig').style.display = platform==='ig'?'grid':'none';
+    document.getElementById('sns-tt').style.display = platform==='tt'?'grid':'none';
+}
+
+/* ── FORM SUBMIT ── */
+function sendForm(e) {
+    e.preventDefault();
+    const btn = document.getElementById('sendBtn');
+    btn.textContent = '送信中...';
+    btn.style.opacity = '.7';
+    setTimeout(() => {
+        btn.textContent = '✓ 送信が完了しました！';
+        btn.style.background = '#4CAF50';
+        btn.style.opacity = '1';
+        setTimeout(() => {
+            btn.textContent = '送信する →';
+            btn.style.background = '';
+            e.target.reset();
+        }, 3200);
+    }, 1100);
+}
+
+/* ── 3D TILT EFFECT ON CARDS ── */
+document.querySelectorAll('.room-card, .m-card, .a-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const rx = ((e.clientY - r.top)  / r.height - .5) * 10;
+        const ry = ((e.clientX - r.left) / r.width  - .5) *-10;
+        card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+/* ── KEYBOARD: Esc closes modal ── */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVid(); });
+</script>
+</body>
+</html>
